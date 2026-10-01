@@ -1,0 +1,46 @@
+/* ════════ interactions — in-frame question ════════
+   Sits low in the frame like an interactive subtitle. Solid colours, no blur. */
+.choice{position:absolute;z-index:40;left:50%;bottom:3.5cqh;translate:-50% 0;width:min(36cqw,560px);
+  display:flex;flex-direction:column;align-items:center;gap:1.1cqh;text-align:center;
+  animation:choiceIn .55s cubic-bezier(.22,.7,.25,1) both}
+@keyframes choiceIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.choice-q{margin:0;padding:.3em .8em .35em;border-radius:.5em;outline:none;
+  font-family:"Baloo 2",sans-serif;font-weight:800;line-height:1.15;color:#FFF7E2;
+  font-size:clamp(17px,2.3cqw,34px);background:rgba(10,26,44,.84);
+  box-shadow:0 .25em 0 rgba(0,0,0,.18)}
+.choice-q:focus-visible{outline:3px solid #FFD264;outline-offset:3px}
+.choice-opts{display:flex;flex-direction:column;gap:.9cqh;width:100%}
+.choice-opt{display:flex;align-items:center;gap:.7em;width:100%;min-height:44px;text-align:left;
+  padding:.5em .9em .55em .55em;border-radius:.65em;background:#FCF6E6;color:#12395F;
+  font-family:"Nunito",sans-serif;font-weight:800;font-size:clamp(15px,1.55cqw,23px);line-height:1.2;
+  box-shadow:0 .22em 0 #C9B78C,0 .5em .9em rgba(20,12,4,.28);transition:transform .18s,background .25s}   /* the shadow changes instantly: never animate box-shadow */
+.choice-opt-in{display:flex;align-items:center;gap:.7em;width:100%}
+.choice-opt b{flex:none;width:1.7em;height:1.7em;border-radius:50%;display:grid;place-items:center;
+  background:#12395F;color:#FFD264;font-family:"Baloo 2";font-size:.95em}
+.choice-opt:hover:not(:disabled){transform:translateY(-2px)}
+.choice-opt:active:not(:disabled){transform:translateY(1px);box-shadow:0 .08em 0 #C9B78C}
+.choice-opt:disabled{opacity:.45;cursor:default}
+/* once answered, the other options step aside so the world can show the result */
+.choice.solved .choice-opt:disabled{display:none}
+.choice-opt.right{background:#E3F6DA;box-shadow:0 .22em 0 #7FB56A,0 .5em .9em rgba(20,12,4,.28)}
+.choice-opt.right b{background:#2E7D3A;color:#fff}
+.choice-opt.wrong{background:#FBE7D6}
+.choice-opt.wrong .choice-opt-in{animation:choiceNudge .42s ease-in-out 1}
+.choice-opt.wrong b{background:#B5642A;color:#fff}
+@keyframes choiceNudge{0%,100%{transform:none}30%{transform:translateX(-5px)}65%{transform:translateX(4px)}}
+.choice-fb{margin:0;min-height:1.3em;font-weight:800;font-size:clamp(16px,1.45cqw,21px);line-height:1.25;
+  color:#FFF7E2;padding:.3em .7em .35em;border-radius:.5em;background:rgba(10,26,44,.84)}
+.choice-fb:empty{display:none}
+.choice-fb.ok{color:#FFE7A0}
+.choice-next{display:flex;align-items:center;gap:.4em;min-height:44px;padding:.45em 1.1em .5em;border-radius:999px;
+  font-family:"Baloo 2";font-weight:800;font-size:clamp(15px,1.5cqw,22px);color:#4A2F00;background:#F5B82E;
+  box-shadow:0 .2em 0 #B67E05}
+.choice-next:hover{transform:translateY(-1px)}
+
+/* tall frames: the question owns the band under the actors' feet */
+.layout-tall .choice{width:92cqw;bottom:2cqh;gap:1cqh}
+.layout-tall .choice-q{font-size:clamp(17px,5.4cqw,28px)}
+.layout-tall .choice-opt{font-size:clamp(15px,4.3cqw,20px)}
+.layout-tall .choice-fb{font-size:clamp(15px,3.9cqw,18px)}
+.layout-tall .choice-next{font-size:clamp(15px,4.3cqw,19px)}
+@media (prefers-reduced-motion:reduce){.choice,.choice-opt.wrong .choice-opt-in{animation:none}}

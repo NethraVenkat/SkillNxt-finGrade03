@@ -1,0 +1,103 @@
+/* ════════ Scenes 09–11 — Rupi's money counter ════════
+   Builds on Scene 13's table and money bodies, Scene 16's hanging sign and
+   Scene 13's answer tags. Solid colours, borders and transforms only:
+   no filter, no blur, no backdrop-filter, no animated shadows. */
+.counter{position:absolute;inset:0;overflow:hidden;overflow:clip;background:#2A1D12}
+.counter:focus{outline:none}
+
+/* money the class can touch */
+.c13-obj.cp-live,.c13-obj.cp-drag{pointer-events:auto;cursor:pointer;padding:0;border:0;background:none;font:inherit;color:inherit}
+.c13-obj.cp-drag{cursor:grab;touch-action:none}
+.c13-obj.cp-drag:active{cursor:grabbing}
+.c13-obj.cp-live:focus,.c13-obj.cp-drag:focus{outline:none}
+.c13-obj.cp-live:focus-visible .c13-ring,.c13-obj.cp-drag:focus-visible .c13-ring{opacity:1;transform:none;border-color:#FFD264;border-style:dashed}
+.c13-obj.cp-live:hover .c13-lay{transform:translateY(-4%)}
+.c13-obj.is-laid.cp-live:hover .c13-lay{transform:rotateX(74deg) translateY(-4%)}
+/* resting pieces do not sway — only the one being looked at moves */
+.c13-obj.cp-still .c13-sway{animation:none!important}
+/* held up towards the class: no contact shadow on the table */
+.c13-obj.cp-held .c13-shadow{opacity:0}
+/* a wrong pick: the piece dips once */
+.c13-obj.cp-nope .c13-lay{animation:cpDip .55s cubic-bezier(.3,.7,.3,1) 1}
+@keyframes cpDip{0%,100%{transform:none}30%{transform:translateY(5%) rotate(-3deg)}65%{transform:translateY(2%) rotate(2deg)}}
+
+/* ── the slate board hung over the counter (Scene 16's sign, with a chalk face) ── */
+.c16-sign.cp-board{padding:.8cqh;background:#7E4F26}
+.cp-slate{position:absolute;inset:.9cqh;border-radius:3px;background:#27352C;border:2px solid #1B251F;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4cqh;text-align:center;
+  font-family:"Baloo 2",sans-serif;font-weight:800;color:#F4F1E6;line-height:1}
+.cp-slate .sym{font-size:clamp(40px,13cqh,150px);line-height:.9}
+.cp-slate .line{font-size:clamp(17px,2.6cqw,36px);color:#F4F1E6}
+.cp-slate .line em{font-style:normal;color:#FFD86B}
+.cp-slate .small{font-size:clamp(15px,1.9cqw,26px);color:#D9E3DA;font-weight:700;letter-spacing:.04em}
+.cp-slate .fade{animation:cpChalk .6s ease both}
+@keyframes cpChalk{from{opacity:0}to{opacity:1}}
+.layout-tall .cp-slate .sym{font-size:clamp(30px,8cqh,70px)}
+.layout-tall .cp-slate .line{font-size:clamp(15px,4.6cqw,24px)}
+.layout-tall .cp-slate .small{font-size:clamp(15px,3.9cqw,19px)}
+
+/* ── small wooden labels resting on the counter ── */
+.cp-tag{position:absolute;z-index:8;translate:-50% 0;padding:.16em .55em .2em;border-radius:5px;white-space:nowrap;
+  background:#C68E52;color:#3A200A;border:2px solid #6E4118;border-top-color:#E9B878;border-bottom-width:4px;
+  font-family:"Baloo 2",sans-serif;font-weight:800;line-height:1;font-size:clamp(15px,1.55cqw,24px);
+  opacity:0;transform:translateY(.5em);transition:opacity .35s ease,transform .45s cubic-bezier(.2,1.3,.4,1);pointer-events:none}
+.cp-tag.on{opacity:1;transform:none}
+.cp-tag.gold{background:#E3B45A;border-color:#8C6420;border-top-color:#F6D58C}
+.cp-tag.wide{font-size:clamp(16px,1.9cqw,28px);padding:.25em .8em .3em}
+.cp-tag small{display:block;font-size:.62em;letter-spacing:.14em;margin-bottom:.15em;color:#5B3514}
+.layout-tall .cp-tag{font-size:clamp(14px,3.9cqw,19px)}
+.layout-tall .cp-tag.wide{font-size:clamp(15px,4.4cqw,21px)}
+
+/* ── a carved plate between two pieces: "=" or "≠" ── */
+.cp-sign{position:absolute;z-index:8;translate:-50% 50%;display:grid;place-items:center;width:10cqh;height:10cqh;border-radius:50%;
+  background:#FCF6E6;color:#12395F;border:.5cqh solid #F5B82E;font-family:"Baloo 2",sans-serif;font-weight:800;
+  font-size:6.4cqh;line-height:1;opacity:0;transform:scale(1.6);transition:opacity .3s ease,transform .45s cubic-bezier(.2,1.4,.4,1)}
+.cp-sign.on{opacity:1;transform:none}
+.cp-sign.sm{width:7cqh;height:7cqh;font-size:4.6cqh;border-width:.4cqh}
+.cp-sign.neq{border-color:#B3261E;color:#B3261E}
+
+/* ── the answers: Scene 13's wooden tags, in sentence case ── */
+.cp-ask .c13-q{max-width:90cqw}
+.cp-ask .c13-q small{font-size:max(15px,.56em);letter-spacing:.14em}
+.cp-tags .c13-tag b{letter-spacing:.02em;text-transform:none}
+.cp-tags .c13-tag-in{gap:.45em;padding-left:1.4em;padding-right:1.4em}
+.cp-tags .c13-tag-in i{font-style:normal;font-size:1.2em;line-height:1}
+.cp-ask .cp-next{margin-top:.6cqh}
+.layout-tall .cp-ask.grid .cp-tags{display:grid;grid-template-columns:1fr 1fr}
+/* inline: one row of tags on the counter's front edge, the carry-on button beside them (the question is on the board) */
+.cp-ask.inline{flex-direction:row;align-items:flex-end;gap:clamp(10px,1.4cqw,20px);bottom:1cqh}
+.cp-ask.inline .c13-tag{min-width:0}
+.cp-ask.inline .cp-next{margin:0}
+.layout-tall .cp-ask.inline{left:2cqw;right:2cqw;flex-wrap:wrap;justify-content:center;gap:6px;bottom:1cqh}
+.layout-tall .cp-ask.inline .cp-tags{gap:5px;align-self:auto;flex:1 1 100%}
+.layout-tall .cp-ask.inline .c13-tag{min-height:46px}
+.layout-tall .cp-ask.inline .c13-tag-in{min-height:46px;padding-left:.5em;padding-right:.5em;flex-direction:column;gap:2px}
+.layout-tall .cp-ask.inline .c13-tag b{font-size:clamp(14px,3.9cqw,17px)}
+
+/* a one-line instruction printed on the front of the counter */
+.cp-hint{position:absolute;z-index:30;left:50%;bottom:2.4cqh;translate:-50% 0;margin:0;width:max-content;max-width:90cqw;text-align:center;
+  color:#FFF3D6;font-family:"Baloo 2",sans-serif;font-weight:800;line-height:1.1;font-size:clamp(16px,1.8cqw,26px);
+  text-shadow:0 2px 0 rgba(40,18,4,.85)}
+.cp-hint.top{bottom:auto;top:3cqh}
+.layout-tall .cp-hint{font-size:clamp(15px,4.6cqw,21px)}
+/* a printed lesson line on the counter's front board */
+.cp-note{position:absolute;z-index:30;left:50%;bottom:2.4cqh;translate:-50% 0;margin:0;width:max-content;max-width:86cqw;text-align:center;
+  padding:.3em .9em .35em;border-radius:6px;background:#12395F;color:#FFF7E2;border:2px solid #0B2742;
+  font-family:"Baloo 2",sans-serif;font-weight:700;line-height:1.15;font-size:clamp(16px,1.9cqw,28px);box-shadow:0 .18em 0 rgba(0,0,0,.3)}
+.cp-note b{color:#FFD264;letter-spacing:.04em}
+.layout-tall .cp-note{font-size:clamp(15px,4.4cqw,21px)}
+
+.cp-row{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.cp-putback{min-height:44px;padding:.45em 1.1em .5em;border-radius:999px;border:2px solid #F2D58E;background:#12395F;color:#FFF3D6;
+  font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(15px,1.5cqw,22px);cursor:pointer}
+.cp-putback:hover{transform:translateY(-1px)}
+.cp-putback:focus-visible{outline:3px solid #FFD264;outline-offset:3px}
+.layout-tall .cp-putback{font-size:clamp(15px,4.3cqw,19px)}
+.cp-box{z-index:5}
+.counter-paused{position:absolute;z-index:45;left:12px;top:12px;padding:5px 11px;border-radius:8px;
+  background:rgba(10,26,44,.8);color:#FFD264;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+
+@media (prefers-reduced-motion:reduce){
+  .cp-tag,.cp-sign{transition:none!important}
+  .cp-slate .fade,.c13-obj.cp-nope .c13-lay{animation:none!important}
+}

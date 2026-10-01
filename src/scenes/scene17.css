@@ -1,0 +1,45 @@
+/* ════════ Scene 17 — READY… SET… SORT! ════════
+   The same counter, pile and trays as Scene 16; the hanging sign becomes a
+   split-flap board — title, countdown, clock, TIME'S UP. Transforms and opacity
+   only; no filter, blur, backdrop-filter, animated shadows or :has(). */
+.sort17{position:absolute;inset:0;overflow:hidden;overflow:clip;background:#2A1D12}
+.sort17:focus{outline:none}
+
+/* the sign hangs where Scene 16 left it (no drop), and grows a little to be read as a clock */
+.c17-sign{transform:none;animation:none;transform-origin:50% 0;perspective:60cqh;transition:scale .8s cubic-bezier(.3,.7,.3,1)}
+.layout-wide .c17-sign.big{scale:1.22}
+.c17-sign.up{background:#8C5A22;border-color:#5A3510;border-top-color:#C99A3E}
+/* each new face flips down onto the board, like a split-flap sign */
+.c17-face{display:block;transform-origin:50% 0;animation:c17Flip .5s cubic-bezier(.3,.8,.3,1.1) both;backface-visibility:hidden}
+@keyframes c17Flip{from{transform:rotateX(-92deg)}to{transform:none}}
+.c17-sign.clock .c17-face{font-variant-numeric:tabular-nums;letter-spacing:.04em;font-size:clamp(24px,4.6cqw,60px)}
+.layout-tall .c17-sign.clock .c17-face{font-size:clamp(22px,8cqw,34px)}
+.c17-held{position:absolute;right:4%;top:50%;translate:0 -50%;padding:.1em .45em;border-radius:3px;font-weight:800;letter-spacing:.1em;
+  font-size:clamp(10px,1.1cqw,14px);color:#3A2206;background:#E2B858;text-transform:uppercase}
+
+/* the trays are scenery now: no rise on mount, no pointer */
+.c17-tray{animation:none;cursor:default;pointer-events:none}
+/* TIME'S UP: one small wave along the nine piles */
+.c17-wave .c16-tray-in{animation:c17Wave .7s cubic-bezier(.3,.8,.3,1.2) calc(var(--k) * 70ms) 1}
+@keyframes c17Wave{0%,100%{transform:none}40%{transform:translateY(-1.6cqh)}}
+
+/* ── the teacher's controls, on the counter's front edge ── */
+.c17-controls{position:absolute;z-index:30;left:50%;bottom:1.2cqh;translate:-50% 0;display:flex;gap:clamp(10px,1.6cqw,20px)}
+.c17-btn{min-height:48px;min-width:112px;padding:.4em 1.1em .45em;border-radius:8px;cursor:pointer;
+  font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(15px,1.5cqw,21px);color:#3A2206;line-height:1;
+  background:#D9AE52;border:3px solid #8C6420;border-top-color:#F6DA92;border-bottom-width:5px;
+  transition:transform .15s cubic-bezier(.3,.8,.3,1.4),background-color .2s ease}
+.c17-btn.go{min-width:200px;font-size:clamp(17px,1.8cqw,25px);background:#F5C24A}
+.c17-btn:hover{transform:translateY(-3px);background-color:#E3BC62}
+.c17-btn.go:hover{background-color:#F8CE66}
+.c17-btn:active{transform:translateY(2px);transition-duration:.05s}
+.c17-btn:focus{outline:none}
+.c17-btn:focus-visible{outline:4px solid #FFF3D6;outline-offset:3px}
+.c17-btn[aria-pressed="true"]{background:#F5C24A}
+.layout-tall .c17-controls{left:3cqw;right:3cqw;translate:none;justify-content:center}
+.layout-tall .c17-btn{flex:1;min-width:0;font-size:clamp(15px,4.4cqw,19px)}
+
+@media (prefers-reduced-motion:reduce){
+  .c17-face,.c17-wave .c16-tray-in{animation:none!important}
+  .c17-sign,.c17-btn{transition:none!important}
+}

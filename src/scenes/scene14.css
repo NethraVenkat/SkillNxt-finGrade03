@@ -1,0 +1,62 @@
+/* ════════ Scene 14 — the value reveal ════════
+   The counter from Scene 13 continues; a stepped wooden display stands on it.
+   Solid colours, borders and transforms only: no filter, no blur, no
+   backdrop-filter, no animated shadows. The shared table, 3D money body and
+   wooden tags come from scene13.css. */
+.value14{position:absolute;inset:0;overflow:hidden;overflow:clip;background:#2A1D12}
+.value14:focus{outline:none}
+
+/* ── the camera trucks right along the counter: what we leave slides out, the display slides in ── */
+.c14-set,.c14-riser{position:absolute;inset:0;z-index:5;pointer-events:none;transition:transform 2.7s cubic-bezier(.45,.05,.3,1)}
+.c14-set.gone{transform:translateX(-88cqw)}
+.c14-riser.away{transform:translateX(82cqw)}
+.c14-riser>*{pointer-events:auto}
+
+/* ── the steps: a top edge catching the light over a darker front ── */
+.c14-step{position:absolute;pointer-events:none;background:#8A5A2C;border-left:2px solid rgba(255,214,160,.22);border-right:2px solid rgba(46,20,4,.5)}
+.c14-step::before{content:"";position:absolute;left:-2px;right:-2px;top:0;height:max(5px,1.4cqh);background:#C18A50;border-bottom:2px solid rgba(60,28,6,.45)}
+.c14-step::after{content:"";position:absolute;left:-4%;right:-4%;bottom:-1.2cqh;height:2cqh;border-radius:50%;background:rgba(40,18,4,.36);z-index:-1}
+.c14-step:nth-child(2){background:#83532A}
+.c14-step:nth-child(3){background:#8E5D2E}
+.c14-step:nth-child(4){background:#7E4F26}
+/* a brass value plate on each step: folded flat until its money arrives */
+.c14-plate{position:absolute;left:50%;bottom:12%;padding:.1em .6em .12em;border-radius:3px;white-space:nowrap;
+  font-family:"Baloo 2",sans-serif;font-weight:800;line-height:1.1;font-size:clamp(12px,2.1cqh,22px);color:#3A2206;
+  background:#E2B858;border:1px solid #8C6420;border-top-color:#F6DA92;
+  transform-origin:50% 100%;transform:translateX(-50%) rotateX(90deg);opacity:0;
+  transition:transform .55s cubic-bezier(.3,.8,.3,1.25),opacity .3s ease}
+.c14-plate.up{transform:translateX(-50%);opacity:1}
+
+/* ── the money on the steps (body from scene13.css) ── */
+.c14-piece{translate:0 0;transition-property:transform,opacity,translate}
+.c14-piece.c14-held-away{visibility:hidden}
+/* the value written on the money: a crisp gold outline finds it (outline, not glow) */
+.c14-mark{position:absolute;box-sizing:border-box;border:max(2px,.4cqh) solid #F5B82E;border-radius:32%;opacity:0;transform:scale(1.4);
+  transition:opacity .35s ease,transform .55s cubic-bezier(.2,1.3,.4,1)}
+.c14-mark.on{opacity:1;transform:none}
+
+/* the ₹100 note can be picked up: an invisible hit area exactly over it */
+.c14-pick{position:absolute;z-index:9;padding:0;border:0;background:none;border-radius:2%;pointer-events:none}
+.c14-pick.on{pointer-events:auto;cursor:pointer}
+.c14-pick:focus{outline:none}
+.c14-pick.on:focus-visible{outline:4px solid #FFD264;outline-offset:4px}
+/* hover / focus: the note lifts a little off its step */
+.c14-riser:has(.c14-pick.on:hover) .c14-piece.c13-note,
+.c14-riser:has(.c14-pick.on:focus-visible) .c14-piece.c13-note{translate:0 -1.4cqh}
+
+/* ── holding the note: the world steps back in the light ── */
+.c14-focus{position:absolute;inset:0;z-index:30;cursor:pointer;background:rgba(12,6,2,.5);animation:c14Fade .4s ease both}
+@keyframes c14Fade{from{opacity:0}to{opacity:1}}
+.c14-held{position:absolute;z-index:35;left:7cqw;top:7cqh;width:min(46cqw,620px)}
+.c14-ask.c14-away{visibility:hidden}
+/* the held note's Flip / Put back: at least 44 × 44 px to touch (scoped here — the shared component is frozen with Scene 12) */
+.c14-held .bn-actions button{min-height:44px;min-width:44px}
+
+/* ── phones / portrait ── */
+.layout-tall .c14-held{left:50%;translate:-50% 0;width:min(90cqw,620px);top:14cqh}
+.layout-tall .c14-plate{font-size:clamp(12px,2.2cqh,18px)}
+
+@media (prefers-reduced-motion:reduce){
+  .c14-set,.c14-riser,.c14-plate,.c14-mark,.c14-piece{transition:none!important}
+  .c14-focus{animation:none}
+}

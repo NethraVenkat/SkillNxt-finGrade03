@@ -1,0 +1,111 @@
+/* ════════ Scene 12 — the money table ════════
+   A wooden market counter in the foreground, in real perspective.
+   Nothing here uses filter or backdrop-filter.
+
+   Performance rule for the 3D surface (measured): the top re-rasterises at each
+   camera scale, so it is built only from things that are nearly free to paint —
+   solid-colour planks, 1–3px borders for seams and joints, one two-stop shade.
+   No fine grain, no radial light on the surface (those cost ~40 fps). */
+.notes12{position:absolute;inset:0;overflow:hidden;overflow:clip;background:#2A1D12}
+.notes12:focus{outline:none}
+
+/* ── the counter ── */
+.n12-table{position:absolute;left:4cqw;right:4cqw;bottom:0;height:40cqh;z-index:2;
+  perspective:120cqw;perspective-origin:50% -60%}
+.n12-top{position:absolute;left:0;right:0;bottom:6.5cqh;height:58cqh;transform-origin:50% 100%;
+  transform:rotateX(62deg);transform-style:preserve-3d;border-radius:.5cqw .5cqw 0 0;background:#8E5A2B;
+  /* crisp edge light: sunlit left rim, shaded right rim, lit far edge */
+  box-shadow:inset .35cqw 0 0 rgba(255,214,160,.22),inset -.45cqw 0 0 rgba(40,18,4,.32),inset 0 .45cqw 0 rgba(255,222,176,.24)}
+/* six planks running away from us — broad tone variation, seams, the odd butt joint */
+.n12-planks{position:absolute;inset:0;display:flex;border-radius:inherit;overflow:hidden}
+.n12-planks i{flex:1;position:relative;border-left:2px solid rgba(255,214,160,.2);border-right:3px solid rgba(52,24,6,.62)}
+/* each board is slightly rounded: darker at its edges, catching light in the middle */
+.n12-planks i::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(44,20,5,.18),rgba(255,228,184,.09) 46%,rgba(44,20,5,.14))}
+.n12-planks i:nth-child(1){background:#94602F}
+.n12-planks i:nth-child(2){background:#A56F3B}
+.n12-planks i:nth-child(3){background:#9A6533}
+.n12-planks i:nth-child(4){background:#A8733F}
+.n12-planks i:nth-child(5){background:#96622F}
+.n12-planks i:nth-child(6){background:#8C592A}
+.n12-planks i::after{content:"";position:absolute;left:0;right:0;border-top:2px solid rgba(52,24,6,.5);box-shadow:0 1px 0 rgba(255,214,160,.14)}
+.n12-planks i:nth-child(1)::after{top:31%}
+.n12-planks i:nth-child(2)::after{top:68%}
+.n12-planks i:nth-child(3)::after{top:12%}
+.n12-planks i:nth-child(4)::after{top:47%}
+.n12-planks i:nth-child(5)::after{top:83%}
+.n12-planks i:nth-child(6)::after{top:22%}
+/* the far end of the counter sits in the stall's shade */
+.n12-farshade{position:absolute;left:0;right:0;top:0;height:42%;pointer-events:none;
+  background:linear-gradient(180deg,rgba(38,17,4,.42),rgba(38,17,4,0))}
+/* warm light that falls on the notes when Rupi turns to them (opacity only) */
+.n12-lit{position:absolute;inset:0;pointer-events:none;background:rgba(255,226,170,.13);opacity:0;transition:opacity 1.2s ease}
+.n12-table.is-lit .n12-lit{opacity:1}
+/* front edge: a rounded, sunlit lip over the darker apron */
+.n12-front{position:absolute;left:0;right:0;bottom:0;height:6.5cqh;
+  background:linear-gradient(180deg,#D39A5B 0 7%,#A56C35 7% 22%,#6E421C 22% 30%,#5E3818 30% 88%,#4A2B11 88%);
+  box-shadow:0 -1px 0 rgba(255,232,190,.5)}
+.n12-front i{position:absolute;top:22%;bottom:0;width:3px;background:rgba(40,18,4,.4)}
+
+/* ── a note lying on the table ── */
+.n12-slot{position:absolute;aspect-ratio:620/300;transform:rotateZ(var(--r));transform-style:preserve-3d;
+  transition:opacity .45s ease,transform .6s cubic-bezier(.2,.8,.3,1)}
+/* a note appears only once its supplied artwork has loaded — never a blank card;
+   it settles onto the counter from just above, one by one as each is ready */
+.n12-slot:not(.ready){opacity:0;transform:rotateZ(var(--r)) translateZ(2.4cqw)}
+.n12-shadow{position:absolute;inset:0;border-radius:2%;background:rgba(36,16,3,.46);
+  transform:translateZ(1px) translate(-2.5%,7%);transition:transform .4s cubic-bezier(.2,.9,.3,1),opacity .4s ease}
+.n12-note{position:absolute;inset:0;padding:0;border-radius:2%;overflow:hidden;background:#EDE6D2;
+  transform:translateZ(2px);transition:transform .4s cubic-bezier(.2,.9,.3,1.25);
+  box-shadow:0 0 0 1px rgba(40,20,4,.18)}
+.n12-note img{width:100%;height:100%;display:block;object-fit:fill;pointer-events:none;user-select:none}
+/* sheen: light catching the paper as it lifts */
+.n12-note::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s ease;
+  background:linear-gradient(115deg,rgba(255,250,235,0) 30%,rgba(255,250,235,.32) 48%,rgba(255,250,235,0) 64%)}
+.n12-slot.lift .n12-note{transform:translateZ(3.2cqw) rotateX(-8deg) rotateZ(-2deg)}
+.n12-slot.lift .n12-note::after{opacity:1}
+.n12-slot.lift .n12-shadow{transform:translateZ(1px) translate(-6%,16%) scale(1.03);opacity:.3}
+.n12-note:focus-visible{outline:4px solid #FFD264;outline-offset:3px}
+.n12-note:disabled{cursor:default}
+.n12-slot.gone .n12-note{visibility:hidden}
+.n12-slot.gone .n12-shadow{opacity:0}
+
+/* the printed label in front of each note: lies flat on the table, stretched by 1/cos(tilt)
+   so it reads upright through the counter's perspective */
+.n12-tag{position:absolute;translate:-50% 0;transform:translateZ(1px) scaleY(2.13);transform-origin:50% 0;
+  padding:.1em .6em .14em;border-radius:4px;white-space:nowrap;background:#E3B45A;color:#3A200A;
+  border:2px solid #8C6420;font-family:"Baloo 2",sans-serif;font-weight:800;line-height:1;font-size:clamp(14px,1.9cqw,30px);
+  opacity:0;transition:opacity .45s ease}
+.n12-tag.ready{opacity:1}
+.layout-tall .n12-tag{transform:translateZ(1px) scaleY(1.89);font-size:clamp(14px,4.4cqw,24px)}
+
+/* ── inspection: the world steps back in the light, the note comes forward ── */
+.n12-focus{position:absolute;inset:0;z-index:30;cursor:pointer;
+  background:radial-gradient(ellipse 62% 72% at 36% 44%,rgba(12,6,2,.12),rgba(12,6,2,.58));
+  animation:n12Fade .45s ease both}
+@keyframes n12Fade{from{opacity:0}to{opacity:1}}
+.n12-held{position:absolute;z-index:35;left:7cqw;top:7cqh;width:min(46cqw,620px)}
+.n12-hint{position:absolute;z-index:32;left:50%;bottom:2.4cqh;translate:-50% 0;margin:0;
+  padding:.28em .8em .32em;border-radius:.4em;font-weight:800;font-size:clamp(13px,1.35cqw,19px);
+  color:#FFF7E2;background:rgba(10,26,44,.74);white-space:nowrap;animation:n12Fade .5s ease both}
+.n12-hint{font-size:clamp(15px,1.4cqw,20px)}
+.n12-paused{position:absolute;z-index:45;left:12px;top:12px;padding:5px 11px;border-radius:8px;
+  background:rgba(10,26,44,.8);color:#FFD264;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+
+/* ── tall frames (phones, tablet portrait): the table comes closer and wider ── */
+.layout-tall .n12-table{left:-3cqw;right:-3cqw;height:46cqh;perspective:240cqw;perspective-origin:50% -20%}
+.layout-tall .n12-top{height:64cqh;transform:rotateX(58deg);bottom:4.5cqh}
+.layout-tall .n12-front{height:5cqh}
+/* the held note never exceeds its 620px source — no upscaled (soft) currency on 1x screens */
+.layout-tall .n12-held{left:50%;translate:-50% 0;width:min(90cqw,620px);top:14cqh}
+.layout-tall .n12-hint{font-size:clamp(15px,3.9cqw,18px)}
+/* the far row is foreshortened to ~35px tall — an invisible margin around those
+   notes brings the touch target past 44px without distorting the art */
+.n12-slot.far .n12-note{overflow:visible}
+.n12-slot.far .n12-note img{border-radius:2%}
+.n12-slot.far .n12-note::before{content:"";position:absolute;inset:-28% -2%}
+
+@media (prefers-reduced-motion:reduce){
+  .n12-slot,.n12-shadow,.n12-note,.n12-note::after,.n12-lit,.n12-tag{transition:none}
+  .n12-focus,.n12-hint{animation:none}
+}

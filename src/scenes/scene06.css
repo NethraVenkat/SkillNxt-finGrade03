@@ -1,0 +1,57 @@
+/* ════════ Scene 06 — the trade path ════════
+   Everything is anchored to the real props; crisp strokes, no glow. */
+.trade{position:absolute;inset:0;pointer-events:none;z-index:6;transition:opacity .7s ease}
+.trade-out{opacity:0}
+.trade>*{position:absolute}
+
+.trade-ring{width:13cqh;height:13cqh;margin:0 0 -6.5cqh -6.5cqh;border-radius:50%;
+  border:.55cqh solid #F5B82E;box-shadow:0 0 0 .35cqh rgba(60,34,4,.35);
+  opacity:0;transform:scale(1.35);transition:opacity .5s ease,transform .7s cubic-bezier(.2,.9,.25,1)}
+.trade-ring.wheat{opacity:1;transform:none}
+.trade-ring.milk.shown{opacity:1;transform:none}
+
+.trade-tag{translate:-50% 0;margin-bottom:-11cqh;padding:.18em .6em .22em;border-radius:.4em;
+  background:#FCF6E6;color:#12395F;font-family:"Baloo 2",sans-serif;font-weight:800;letter-spacing:.08em;
+  font-size:clamp(12px,1.5cqw,24px);line-height:1;box-shadow:0 .18em 0 #C9B78C;white-space:nowrap}
+.trade-tag.milk{opacity:0;transition:opacity .5s ease .3s}
+.trade-tag.milk.shown{opacity:1}
+
+.trade-seg{height:.9cqh;margin-bottom:-.45cqh;transform-origin:0 50%}
+.trade-seg::after{content:"";position:absolute;inset:0;border-radius:99px;background:#F5B82E;
+  box-shadow:0 .2cqh 0 rgba(60,34,4,.45);transform:scaleX(0);transform-origin:0 50%;
+  transition:transform 1.5s cubic-bezier(.45,.05,.35,1),background .6s ease}
+.trade-seg.drawn::after{transform:scaleX(1)}
+/* arrowhead at the milk end */
+.trade-seg.b::before{content:"";position:absolute;right:-.6cqh;top:50%;margin-top:-1.7cqh;
+  border-left:2.6cqh solid #F5B82E;border-top:1.7cqh solid transparent;border-bottom:1.7cqh solid transparent;
+  opacity:0;transition:opacity .3s ease 1.3s,border-color .6s ease}
+.trade-seg.b.drawn::before{opacity:1}
+/* broken: the seller's half turns grey and dashed-looking */
+.trade-cross .trade-seg.b::after{background:repeating-linear-gradient(90deg,#8C8173 0 1.6cqw,transparent 1.6cqw 2.6cqw);box-shadow:none}
+.trade-cross .trade-seg.b::before{border-left-color:#8C8173}
+/* repaired: two-way */
+.trade-works .trade-seg::after{background:#F5B82E}
+.trade-works .trade-seg.a::before{content:"";position:absolute;left:-.6cqh;top:50%;margin-top:-1.7cqh;
+  border-right:2.6cqh solid #F5B82E;border-top:1.7cqh solid transparent;border-bottom:1.7cqh solid transparent}
+
+.trade-x,.trade-ok{translate:-50% 50%;width:9cqh;height:9cqh;border-radius:50%;display:grid;place-items:center;
+  font-family:"Baloo 2",sans-serif;font-weight:800;font-size:5.6cqh;line-height:1;
+  opacity:0;transform:scale(1.7);transition:opacity .25s ease,transform .45s cubic-bezier(.2,1.4,.4,1)}
+.trade-x{background:#FCF6E6;color:#B3261E;box-shadow:0 0 0 .5cqh #B3261E,0 .5cqh 0 rgba(40,20,4,.35)}
+.trade-ok{background:#FCF6E6;color:#2E7D3A;box-shadow:0 0 0 .5cqh #2E7D3A,0 .5cqh 0 rgba(40,20,4,.35)}
+.trade-x.shown,.trade-ok.shown{opacity:1;transform:none}
+
+.trade-plaque{translate:-50% 0;margin-bottom:6.5cqh;padding:.25em .75em .3em;border-radius:.45em;white-space:nowrap;
+  background:#12395F;color:#FFF7E2;font-family:"Baloo 2",sans-serif;font-weight:700;
+  font-size:clamp(13px,1.7cqw,26px);line-height:1.1;box-shadow:0 .2em 0 rgba(0,0,0,.3);
+  opacity:0;transform:translateY(.6em);transition:opacity .5s ease .5s,transform .6s cubic-bezier(.22,.7,.25,1) .5s}
+.trade-plaque b{color:#FFD264;letter-spacing:.06em}
+.trade-plaque.shown{opacity:1;transform:none}
+
+/* phones: the plaque gives way — the answer line and Rupi carry that sentence */
+.layout-tall .trade-tag{font-size:clamp(11px,3.4cqw,18px);margin-bottom:-9.6cqh}
+.layout-tall .trade-ring{width:11cqh;height:11cqh;margin:0 0 -5.5cqh -5.5cqh}
+.layout-tall .trade-plaque{display:none}
+.layout-tall .trade-x,.layout-tall .trade-ok{width:7cqh;height:7cqh;font-size:4.4cqh}
+
+@media (prefers-reduced-motion:reduce){.trade *,.trade::after,.trade *::after,.trade *::before{transition:none!important}}

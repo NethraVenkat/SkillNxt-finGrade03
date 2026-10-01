@@ -1,0 +1,26 @@
+/* ════════ characters — speech bubbles (shared by every cinematic scene) ════════ */
+/* dialogue — cream bubbles like Scene 01, crisp tail, solid shadow */
+.bubble{position:absolute;z-index:8;translate:-50% 0;width:max-content;max-width:var(--bw);
+  padding:.5em .85em .55em;border-radius:.8em;background:#FCF6E6;color:#123A63;
+  font-family:"Baloo 2",sans-serif;font-weight:700;line-height:1.18;font-size:clamp(13px,1.75cqw,30px);
+  box-shadow:0 .2em 0 #D8C79E,0 .55em .9em rgba(40,22,6,.28);
+  transform-origin:var(--tail) 115%;opacity:0;transform:scale(.6) translateY(.6em);visibility:hidden;
+  transition:opacity .3s ease,transform .45s cubic-bezier(.2,1.25,.4,1),visibility 0s linear .45s}
+.bubble::after{content:"";position:absolute;top:100%;left:var(--tail);margin-left:-.55em;
+  border-top:.75em solid #FCF6E6;border-left:.55em solid transparent;border-right:.55em solid transparent}
+.bubble.on{opacity:1;transform:none;visibility:visible;transition:opacity .3s ease,transform .45s cubic-bezier(.2,1.25,.4,1)}
+.bubble.on.dim{opacity:.7;transform:scale(.94)}
+.bubble-line{display:block}
+/* beside the face: anchored by its right edge, tail on the right pointing at the speaker */
+.bubble.beside-left{translate:-100% 50%;transform-origin:110% 50%}
+.bubble.beside-left::after{top:50%;left:100%;margin:-.55em 0 0;border-top:.55em solid transparent;border-bottom:.55em solid transparent;
+  border-left:.75em solid #FCF6E6;border-right:0}
+.bubble-em{transition:background .6s ease,color .6s ease;border-radius:.25em;padding:0 .12em;margin:0 -.12em}
+.bubble.em .bubble-em{background:#F5B82E;color:#3A2600}
+.bubble-lg{font-size:clamp(15px,2.15cqw,36px);padding:.6em 1em .65em;text-align:center}
+.bubble-lg .bubble-em{background:#F5B82E;color:#3A2600;letter-spacing:.05em}
+
+.layout-tall .bubble{font-size:clamp(12px,3.9cqw,20px)}
+.layout-tall .bubble-lg{font-size:clamp(14px,4.6cqw,22px)}
+
+@media (prefers-reduced-motion:reduce){.bubble,.bubble.on,.bubble-em{transition:none}}

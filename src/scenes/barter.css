@@ -1,0 +1,9 @@
+/* ════════ Scenes 05–06 — frame + dialogue ════════ */
+.barter{position:absolute;inset:0;overflow:hidden;overflow:clip;background:#2A1D12}
+/* focus parks here between questions (never tabbed to); the next Tab moves into the scene's controls */
+.barter:focus{outline:none}
+
+.barter-paused{position:absolute;z-index:45;left:12px;top:12px;padding:5px 11px;border-radius:8px;
+  background:rgba(10,26,44,.8);color:#FFD264;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+
+

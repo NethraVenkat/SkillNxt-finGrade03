@@ -1,0 +1,26 @@
+/* ════════ world — plate, layers, lighting ════════ */
+.world{position:absolute;inset:0;overflow:hidden;overflow:clip;container-type:size;background:#2A1D12}
+.world-layer{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform;backface-visibility:hidden}
+.world-bg{inset:-4%}
+.world-bg img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;pointer-events:none}
+
+/* lighting — gradients here are light, not decoration */
+.env{position:absolute;inset:0;pointer-events:none}
+.env>span{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}
+.env-sun{background:radial-gradient(ellipse 60% 55% at 64% 22%,rgba(255,214,150,.30),rgba(255,214,150,0) 70%);
+  opacity:.55!important;animation:envBreath 11s ease-in-out infinite}
+.env-shade{background:linear-gradient(180deg,rgba(24,38,66,.28),rgba(24,38,66,.40))}
+.env-bright{background:radial-gradient(ellipse 80% 70% at 55% 30%,rgba(255,236,190,.34),rgba(255,236,190,0) 72%)}
+.mood-quiet .env-shade{opacity:1}
+/* hush: the held breath before an idea — darker than quiet */
+.mood-hush .env-shade{opacity:1}
+.mood-hush .env-sun{opacity:.05!important}
+.mood-hush .env-bright{opacity:0}
+.mood-quiet .env-sun{opacity:.15!important}
+.mood-bright .env-bright{opacity:1}
+.env-still .env-sun{animation:none}
+@keyframes envBreath{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.04);opacity:.62}}
+@media (prefers-reduced-motion:reduce){.env-sun{animation:none!important}}
+
+/* screen-reader-only captions of the film */
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}

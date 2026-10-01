@@ -1,0 +1,48 @@
+/* ════════ Scene 18 — the final recap ════════
+   The same counter, trays and split-flap sign; the story's cast returns. Calm,
+   warm, celebratory — the motion is the story acting itself out, not decoration.
+   Transforms and opacity (plus one small border-colour change); no filter, blur,
+   backdrop-filter, :has() or particles. */
+.recap18{position:absolute;inset:0;overflow:hidden;overflow:clip;background:#2A1D12}
+.recap18:focus{outline:none}
+
+/* the sign drifts clear of Rupi's lines; its faces carry an idea word and its line */
+.c18-sign{transition:scale .8s cubic-bezier(.3,.7,.3,1),translate 1.4s cubic-bezier(.4,.1,.3,1)}
+.c18-sign.words .c17-face{font-size:clamp(13px,1.6cqw,21px);line-height:1.15;padding:0 .7em}
+/* the idea itself is the headline; its line sits beneath it */
+.c18-sign .c17-face small{display:block;margin-bottom:.12em;font-size:1.3em;letter-spacing:.1em;color:#FFD66E}
+.layout-tall .c18-sign.words .c17-face{font-size:clamp(12px,3.6cqw,16px)}
+
+/* ✕ / ✓ hung between the farmer and the milk seller */
+.c18-mark{position:absolute;z-index:6;translate:-50% 0;display:grid;place-items:center;border-radius:50%;
+  font-family:"Baloo 2",sans-serif;font-weight:800;line-height:1;font-size:clamp(18px,3.4cqh,34px);color:#fff;
+  border:3px solid rgba(255,255,255,.85);animation:c18Pop .45s cubic-bezier(.3,1.5,.4,1) both}
+.c18-mark.no{background:#B3261E}
+.c18-mark.yes{background:#2E7D3A}
+@keyframes c18Pop{from{transform:scale(.3);opacity:0}to{transform:none;opacity:1}}
+
+/* the sort's leftovers slide off to the left: the counter is calm again */
+.c18-clearing{position:absolute;inset:0;z-index:5;pointer-events:none;transition:transform 1.8s cubic-bezier(.5,.05,.3,1)}
+.c18-clearing.gone{transform:translateX(-95cqw)}
+
+/* MONEY: the ₹10 coin arcs from the farmer's hands to the milk seller */
+.c18-coin{z-index:7;animation:c18Arc 1.7s cubic-bezier(.35,.1,.3,1) .7s both}
+@keyframes c18Arc{
+  0%{transform:translate3d(calc(var(--x0) * 1cqw - 50%),calc(var(--y0) * -1cqh),0) scale(.6);opacity:0}
+  12%{opacity:1}
+  50%{transform:translate3d(calc(var(--xm) * 1cqw - 50%),calc(var(--ym) * -1cqh),0) scale(1) rotate(160deg)}
+  100%{transform:translate3d(calc(var(--x) * 1cqw - 50%),calc(var(--y) * -1cqh),0) rotate(360deg)}}
+
+/* DENOMINATIONS: each pile receives its own coin or note, one after another */
+.c18-in.c18-k-coin{width:44%;left:28%;right:auto;border-radius:50%;transform:scaleY(.6);box-shadow:none}
+.c18-in.drop{animation:c18Drop .5s cubic-bezier(.3,.8,.3,1.2) calc(var(--k) * 260ms) both}
+@keyframes c18Drop{from{translate:0 -6cqh;opacity:0}to{translate:0 0;opacity:1}}
+.c18-full .c16-tray-in{border-color:#F5C24A;border-bottom-color:#B8872E;transition:border-color .3s ease calc(var(--k) * 260ms + .3s)}
+.c18-full .c16-label{background:#F5C24A;transition:background-color .3s ease calc(var(--k) * 260ms + .3s)}
+
+.c18-controls{z-index:31}
+
+@media (prefers-reduced-motion:reduce){
+  .c18-sign,.c18-clearing,.c18-full .c16-tray-in,.c18-full .c16-label{transition:none!important}
+  .c18-mark,.c18-coin,.c18-in.drop{animation:none!important}
+}

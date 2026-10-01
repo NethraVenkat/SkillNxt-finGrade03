@@ -1,0 +1,128 @@
+/* ════════ Scene 15 — Rupi's quick money game ════════
+   The same counter as Scenes 13–14; a quicker rhythm: tosses, snaps, flicks.
+   Solid colours, borders and transforms only: no filter, no blur, no
+   backdrop-filter, no animated shadows, no :has(). The shared counter and 3D
+   money body come from scene13.css. */
+.game15{position:absolute;inset:0;overflow:hidden;overflow:clip;background:#2A1D12}
+.game15:focus{outline:none}
+
+/* ── the camera trucks left: Scene 14's display slides out right, the game corner slides in from the left ── */
+.c15-leave,.c15-corner{position:absolute;inset:0;z-index:5;pointer-events:none;transition:transform 2.3s cubic-bezier(.5,.05,.25,1)}
+.c15-leave.gone{transform:translateX(90cqw)}
+.c15-corner.away{transform:translateX(-90cqw)}
+.c15-corner>*{pointer-events:none}
+
+/* Scene 14's steps, exactly as they were (plates up) */
+.c15-step{position:absolute;background:#8A5A2C;border-left:2px solid rgba(255,214,160,.22);border-right:2px solid rgba(46,20,4,.5)}
+.c15-step::before{content:"";position:absolute;left:-2px;right:-2px;top:0;height:max(5px,1.4cqh);background:#C18A50;border-bottom:2px solid rgba(60,28,6,.45)}
+.c15-step:nth-child(2){background:#83532A}
+.c15-step:nth-child(3){background:#8E5D2E}
+.c15-step:nth-child(4){background:#7E4F26}
+.c15-plate{position:absolute;left:50%;bottom:12%;translate:-50% 0;padding:.1em .6em .12em;border-radius:3px;white-space:nowrap;
+  font-family:"Baloo 2",sans-serif;font-weight:800;line-height:1.1;font-size:clamp(12px,2.1cqh,22px);color:#3A2206;
+  background:#E2B858;border:1px solid #8C6420;border-top-color:#F6DA92}
+.layout-tall .c15-plate{font-size:clamp(12px,2.2cqh,18px)}
+
+/* ── the money box: a wooden chest; its lid flips open as the money is tossed out ── */
+.c15-box{position:absolute;background:#7A4A22;border:2px solid #4E2D12;border-top:0;border-radius:0 0 4px 4px}
+.c15-box::after{content:"";position:absolute;left:-4%;right:-4%;bottom:-1.2cqh;height:2cqh;border-radius:50%;background:rgba(40,18,4,.36);z-index:-1}
+.c15-box i{position:absolute;top:0;bottom:0;width:10%;background:#C99A3E;border-left:1px solid #F2CF7A;border-right:1px solid #8E6A24}
+.c15-box i:nth-of-type(1){left:6%}
+.c15-box i:nth-of-type(2){right:6%}
+.c15-lid{position:absolute;left:-3%;right:-3%;top:-1.8cqh;height:2.4cqh;border-radius:5px 5px 0 0;background:#9A6232;
+  border:2px solid #4E2D12;border-bottom-color:#C99A3E;transform-origin:50% 100%}
+.c15-lid.flip{animation:c15Lid .9s cubic-bezier(.3,.8,.3,1) 1}
+@keyframes c15Lid{0%{transform:none}25%{transform:translateY(-1.4cqh) rotate(-24deg)}60%{transform:translateY(-1.4cqh) rotate(-24deg)}100%{transform:none}}
+
+/* ── the reveal block the money lands on ── */
+.c15-block{position:absolute;background:#8A5A2C;border-left:2px solid rgba(255,214,160,.22);border-right:2px solid rgba(46,20,4,.5)}
+.c15-block::before{content:"";position:absolute;left:-2px;right:-2px;top:0;height:max(5px,1.4cqh);background:#C18A50;border-bottom:2px solid rgba(60,28,6,.45)}
+.c15-block::after{content:"";position:absolute;left:-4%;right:-4%;bottom:-1.2cqh;height:2cqh;border-radius:50%;background:rgba(40,18,4,.36);z-index:-1}
+
+/* ── the star board: five sockets and a carved score ── */
+.c15-board{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;
+  background:#6E4320;border:3px solid #4A2A10;border-top-color:#9A6232;border-radius:5px}
+.c15-board::before,.c15-board::after{content:"";position:absolute;bottom:-3cqh;width:6%;height:3cqh;background:#4A2A10}
+.c15-board::before{left:14%}
+.c15-board::after{right:14%}
+.c15-sockets{display:flex;gap:4%;width:88%;justify-content:center}
+.c15-socket{flex:1;max-width:3.4cqw;aspect-ratio:1;display:grid;place-items:center}
+.c15-socket svg{width:100%;height:100%;fill:#3E2710;stroke:#2A1808;stroke-width:1.2;transition:fill .25s ease}
+.c15-socket.full svg{fill:#F5C24A;stroke:#A57A22;animation:c15Pop .45s cubic-bezier(.3,1.6,.4,1) 1}
+@keyframes c15Pop{0%{transform:scale(.4)}100%{transform:none}}
+.c15-score{font-family:"Baloo 2",sans-serif;font-weight:800;color:#F2D58E;font-size:clamp(12px,2.3cqh,22px);line-height:1;letter-spacing:.04em}
+.layout-tall .c15-board{flex-direction:row;gap:3%;padding:0 3%}
+.layout-tall .c15-sockets{width:auto;flex:1}
+.layout-tall .c15-socket{max-width:6cqw}
+.layout-tall .c15-score{font-size:clamp(12px,3.6cqw,18px)}
+/* a number that changes rolls in from below rather than just swapping */
+.c15-num{display:inline-block;animation:c15Tick .4s cubic-bezier(.3,1.4,.4,1) 1}
+@keyframes c15Tick{from{transform:translateY(60%);opacity:0}to{transform:none;opacity:1}}
+
+/* ── the money: tossed out of the box in a spinning arc, a bounce on the block ── */
+.c15-piece{animation:c15Toss 1.05s cubic-bezier(.3,.6,.4,1) both}
+@keyframes c15Toss{
+  0%{transform:translate3d(calc(var(--x0) * 1cqw - 50%),calc(var(--y0) * -1cqh),0) scale(.35) rotate(-160deg);opacity:0}
+  12%{opacity:1}
+  50%{transform:translate3d(calc(var(--xm) * 1cqw - 50%),calc(var(--ym) * -1cqh),0) scale(.85) rotate(-30deg)}
+  78%{transform:translate3d(calc(var(--x) * 1cqw - 50%),calc(var(--y) * -1cqh),0) rotate(4deg)}
+  89%{transform:translate3d(calc(var(--x) * 1cqw - 50%),calc((var(--y) + 1.6) * -1cqh),0) rotate(-1deg)}
+  100%{transform:translate3d(calc(var(--x) * 1cqw - 50%),calc(var(--y) * -1cqh),0)}}
+/* right: after the star has left, the money is flicked away to make room */
+.c15-piece.leave{animation:c15Flick .55s cubic-bezier(.5,0,.8,.4) .95s both}
+@keyframes c15Flick{
+  from{transform:translate3d(calc(var(--x) * 1cqw - 50%),calc(var(--y) * -1cqh),0);opacity:1}
+  to{transform:translate3d(calc((var(--x) + 34) * 1cqw - 50%),calc((var(--y) + 12) * -1cqh),0) rotate(150deg) scale(.6);opacity:0}}
+/* the value written on the money: a crisp gold outline (shown as the hint after a wrong tap) */
+.c15-mark{position:absolute;box-sizing:border-box;border:max(2px,.4cqh) solid #F5B82E;border-radius:32%;opacity:0;transform:scale(1.4);
+  transition:opacity .3s ease,transform .45s cubic-bezier(.2,1.3,.4,1)}
+.c15-mark.on{opacity:1;transform:none}
+
+/* ── the star in flight ── */
+.c15-fly{position:absolute;left:0;bottom:0;width:4cqh;height:4cqh;z-index:9;pointer-events:none;animation:c15Fly .85s cubic-bezier(.35,.1,.3,1) both}
+.c15-fly svg{width:100%;height:100%;fill:#F5C24A;stroke:#A57A22;stroke-width:1.2}
+@keyframes c15Fly{
+  0%{transform:translate3d(calc(var(--sx) * 1cqw - 50%),calc(var(--sy) * -1cqh),0) scale(.3);opacity:0}
+  15%{opacity:1}
+  50%{transform:translate3d(calc(var(--mx) * 1cqw - 50%),calc(var(--my) * -1cqh),0) scale(1.5) rotate(90deg)}
+  96%{transform:translate3d(calc(var(--tx) * 1cqw - 50%),calc((var(--ty) - 2) * -1cqh),0) scale(.9) rotate(216deg);opacity:1}
+  100%{transform:translate3d(calc(var(--tx) * 1cqw - 50%),calc((var(--ty) - 2) * -1cqh),0) scale(.9) rotate(216deg);opacity:0}}
+
+/* ── the answer tokens: round brass game pieces on the counter's edge, the question printed above ── */
+.c15-ask{position:absolute;z-index:30;left:50%;bottom:1.4cqh;translate:-50% 0;display:flex;flex-direction:column;align-items:center;gap:.8cqh}
+.c15-q{margin:0;text-align:center;color:#FFF3D6;font-family:"Baloo 2",sans-serif;font-weight:800;line-height:1.05;
+  font-size:clamp(17px,1.9cqw,27px);text-shadow:0 2px 0 rgba(40,18,4,.85)}
+.c15-q small{display:block;margin-bottom:.25em;font-size:.5em;letter-spacing:.2em;text-transform:uppercase;color:#F2D58E}
+.c15-tokens{display:flex;gap:clamp(12px,2cqw,28px)}
+.c15-token{position:relative;width:clamp(64px,7.2cqw,92px);aspect-ratio:1;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;font:inherit}
+.c15-token::after{content:"";position:absolute;left:8%;right:8%;bottom:-7px;height:12px;border-radius:50%;background:rgba(30,12,2,.5);transition:transform .15s ease,opacity .15s ease}
+.c15-token-in{position:relative;z-index:1;display:grid;place-items:center;width:100%;height:100%;border-radius:50%;
+  background:#D9AE52;border:3px solid #8C6420;border-top-color:#F6DA92;box-sizing:border-box;
+  font-family:"Baloo 2",sans-serif;font-weight:800;color:#3A2206;font-size:clamp(17px,1.9cqw,26px);line-height:1;
+  text-shadow:0 1px 0 rgba(255,236,190,.6);animation:c15Deal .45s cubic-bezier(.3,1.4,.4,1) both;
+  transition:transform .15s cubic-bezier(.3,.8,.3,1.4),background-color .2s ease}
+.c15-token:nth-child(2) .c15-token-in{animation-delay:.07s}
+.c15-token:nth-child(3) .c15-token-in{animation-delay:.14s}
+@keyframes c15Deal{from{transform:translateY(90%) rotate(-40deg);opacity:0}to{transform:none;opacity:1}}
+.c15-token:hover .c15-token-in{transform:translateY(-5px) rotate(-6deg);background-color:#E3BC62}
+.c15-token:hover::after{transform:scaleX(.85);opacity:.7}
+.c15-token:active .c15-token-in{transform:translateY(2px);transition-duration:.05s}
+.c15-token:focus{outline:none}
+.c15-token:focus-visible .c15-token-in{outline:4px solid #FFF3D6;outline-offset:3px}
+.c15-token.is-right .c15-token-in{transform:translateY(3px) scale(.96);background-color:#F5C24A;border-color:#A57A22}
+.c15-token.is-wrong .c15-token-in{animation:c15Dip .5s cubic-bezier(.3,.7,.3,1) 1;background-color:#B98E45}
+@keyframes c15Dip{0%{transform:none}30%{transform:translateY(4px) scale(.95)}100%{transform:translateY(1px)}}
+.c15-tokens.is-waiting .c15-token{cursor:default}
+.c15-tokens.is-waiting .c15-token:hover .c15-token-in{transform:none;background-color:#D9AE52}
+.c15-tokens.is-waiting .c15-token.is-right .c15-token-in{transform:translateY(3px) scale(.96);background-color:#F5C24A}
+
+/* ── phones / portrait: the question and three large tokens across the counter's edge ── */
+.layout-tall .c15-ask{left:3cqw;right:3cqw;translate:none;bottom:1.6cqh}
+.layout-tall .c15-q{font-size:clamp(18px,5.4cqw,24px)}
+.layout-tall .c15-token{width:clamp(64px,20cqw,86px)}
+.layout-tall .c15-token-in{font-size:clamp(18px,5.4cqw,24px)}
+
+@media (prefers-reduced-motion:reduce){
+  .c15-leave,.c15-corner,.c15-socket svg,.c15-mark,.c15-token-in,.c15-token::after{transition:none!important}
+  .c15-piece,.c15-lid,.c15-socket.full svg,.c15-num,.c15-token-in,.c15-token.is-wrong .c15-token-in{animation:none!important}
+}
